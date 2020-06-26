@@ -1,0 +1,72 @@
+Create a map reduce porgram for batch processing in eclipse which is written in java
+
+1. open eclipse
+2. create project map
+3.  create class file named with Map1
+4. Write the following code inside main class Map1
+package map;
+
+import java.io.IOException;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+public class  Map1{
+
+	public static class TxnMapper extends Mapper<LongWritable,Text,Text,IntWritable>{
+		Text outKey = new Text();
+		IntWritable outValue = new IntWritable();
+		public void map(LongWritable key,Text value,Context context) throws IOException, InterruptedException{
+			String[] columns = value.toString().split(",");
+			outKey.set(columns[2]);
+			outValue.set(Integer.parseInt(columns[3]));
+			context.write(outKey, outValue);
+		}
+	}
+	
+	public static class TxnReducer extends Reducer<Text,IntWritable,Text,IntWritable>{
+		IntWritable outValue = new IntWritable();
+		public void reduce(Text key,Iterable<IntWritable> values,Context context) throws IOException, InterruptedException{
+			int sum = 0;
+			for(IntWritable value:values){
+				sum = sum + value.get();
+			}
+			outValue.set(sum);
+			context.write(key, outValue);
+		}
+	}
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
+		Configuration conf = new Configuration();
+		Job job = new Job(conf, "Txn count program");
+
+		job.setJarByClass(Map1.class);
+		job.setMapperClass(TxnMapper.class);
+		job.setReducerClass(TxnReducer.class);
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(IntWritable.class);
+		job.setOutputKeyClass(Text.class);
+		job.setOutputValueClass(IntWritable.class);
+
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		System.exit(job.waitForCompletion(true) ? 0 : 1);
+	}
+
+}
+
+5. save the project and export into jar file 
+6. Run the following command in terminal 
+hadoop jar /home/training/mymap1.jar  map.Map1 /user/training/sqoopOutput  /user/training/hive
+7. You can see the output in hdfs directory i.e /user/training/hive/

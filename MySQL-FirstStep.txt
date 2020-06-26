@@ -1,0 +1,41 @@
+In this project, we import the data  from relational database i.e MySQL and loaded into HDFS using sqoop, after importing the data we use map reduce program to process the data comming from sqoop and produces some meaningful data using batch processing. After we use hive query for producing the final result.
+
+
+
+Steps: Using MySQL
+Login to mysql 
+Steps: 
+1.  sudo service mysqld status
+2. sudo service mysqld start
+3. sudo service mysqld status
+4. mysql -u root -p
+5 give username and password
+bydefault username is root and password is root
+6. create database transaction;
+7. use transaction;
+8. 
+create table bank_txn(txn_id int, txn_date varchar(30), user_id int, amount int, product int , city varchar(30),payment_mode varchar(30));
+9. insert into bank_txn  values (1,'01-20-2013',400100,100,'Exercise & Fitness','Clarksville','credit');
+insert into bank_txn  values (2,'02-22-2013',400100,200,'Exercise & Fitness','Clarksville','credit');
+insert into bank_txn  values (3,'03-07-2013',400212,300,'Exercise & Fitness','long beach','cash');
+insert into bank_txn  values (4,'05-11-2013',400104,450,'Exercise & Fitness','Clarkville','cash');
+insert into bank_txn  values (5,'03-15-2013',400212,1374,'Exercise &Fitness','Clarksville','credit');
+insert into bank_txn  values (6,'04-08-2013',400327,415,'Water Sports','Columbus','credit');
+insert into bank_txn  values (7,'11-19-2013',400978,421,'Team Sports','Petersburg','credit');
+insert into bank_txn  values (8,'11-09-2013',400743,279,'Combat Sports','Reno','credit');
+insert into bank_txn  values (9,'12-23-2013',400743,123,'Jumping','Columbus','cash');
+insert into bank_txn  values (10,'12-27-2013',400527,500,'Water Sports','Columbus','credit');
+insert into bank_txn  values (11,'04-08-2013',400212,1374,'Exercise&Fitness','Clarksville','credit');
+insert into bank_txn  values (12,'01-20-2013',400100,103,'Water Sports','Honolulu','credit');
+insert into bank_txn  values (13,'02-22-2013',400428,20,'Gymnastics','Columbia','cash');
+insert into bank_txn  values (14,'03-07-2013',400428,234,'Exercise & Fitness','omaha','credit');
+insert into bank_txn  values (15,'05-11-2013','400675,120,'Team sports','Petersburg','cash');
+insert into bank_txn  values (16,'02-12-2013',400428,200,'puzzles','New York','credit');
+insert into bank_txn  values (17,'02-22-2013',400428,20,'Gymnastics','Columbia','cash');
+insert into bank_txn  values (18,'03-07-2013',400428,234,'Exercise & Fitness','omaha','credit');
+insert into bank_txn  values (19,'05-11-2013',400675,120,'Team sports','Petersburg','cash');
+insert into bank_txn  values (20,'02-12-2013',400428,200,'puzzles','New York','credit');
+
+10. select * from bank_txn limit 10;
+
+

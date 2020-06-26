@@ -1,0 +1,25 @@
+# hive 
+Open the hive shell in terminal or you can use hue---->
+1. show databases;
+
+2. use default; // changes the database where you want to create tables in hive warehouse
+
+3.  create table bank_txn(txn_id int, txn_date string, user_id int, amount int, product int , city string,payment_mode string);
+
+4. show tables;
+
+5. create table txn_report( user_id string,amount int) ROW FORMAT DELIMITED FIELDS TERMINATED BY  '\t';
+
+
+6. select * from txn_report;
+
+7.  LOAD DATA INPATH  '/user/training/hive/' INTO TABLE txn_report;
+
+8. set hive.cli.print.header=true;  //printing the coloumn header in the hive terminal
+
+9.select * from txn_report;
+
+10. select max(amount)  from txn_report;
+
+----------------------------------------------------------------------------------Completed-----------------------------
+
